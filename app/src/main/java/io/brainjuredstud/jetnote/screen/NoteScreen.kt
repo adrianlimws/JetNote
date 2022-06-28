@@ -3,6 +3,9 @@ package io.brainjuredstud.jetnote.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -18,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import io.brainjuredstud.jetnote.R
 import io.brainjuredstud.jetnote.components.NoteButton
 import io.brainjuredstud.jetnote.components.NoteInputText
+import io.brainjuredstud.jetnote.data.NotesDataSource
 import io.brainjuredstud.jetnote.model.Note
 
 
@@ -85,7 +89,14 @@ fun NoteScreen(
                 })
 
 
+            }
+        Divider(modifier = Modifier.padding(10.dp))
+        LazyColumn{
+            items(notes) {
+                    note -> Text(text = note.title)
+            }
         }
+
     }
 
 }
@@ -94,5 +105,5 @@ fun NoteScreen(
 @Preview(showBackground = true)
 @Composable
 fun NoteScreenPreview() {
-    NoteScreen()
+    NoteScreen(notes = NotesDataSource().loadNotes(), onAddNote = {}, onRemoveNote = {})
 }
