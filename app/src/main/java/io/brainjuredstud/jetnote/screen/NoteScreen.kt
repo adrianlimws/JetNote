@@ -44,64 +44,48 @@ fun NoteScreen(
     }
 
     Column(modifier = Modifier.padding(6.dp)) {
-        TopAppBar(title = {
-                          Text(text = stringResource(id = R.string.app))
-        },
+        TopAppBar(title = {Text(text = stringResource(id = R.string.app))},
             actions = {
                 Icon(imageVector = Icons.Rounded.Notifications,
-                    contentDescription = "Notification Icon")
-            },
+                    contentDescription = "Notification Icon")},
                 backgroundColor = Color(0xFFDADFE3))
-        // Column
+
         Column(modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-
             NoteInputText(
-                modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
+                modifier = Modifier.padding( top = 9.dp, bottom = 8.dp ),
                 text = title,
                 label = "Title",
-                onTextChange = {
-                    if (it.all {
-                        char: Char -> char.isLetter() || char.isWhitespace() }
-                        ) title = it })
-
-
+                onTextChange = {if (it.all {char: Char -> char.isLetter() || char.isWhitespace()}) title = it })
 
             NoteInputText(
-                modifier = Modifier.padding(top = 9.dp, bottom = 8.dp),
+                modifier = Modifier.padding( top = 9.dp, bottom = 8.dp ),
                 text = description,
                 label = "Add a note",
                 onTextChange = {
-                    if (it.all
-                        {
-                        char: Char -> char.isLetter() || char.isWhitespace()
-                        }
-                    ) description = it
-                })
+                    if (it.all { char: Char -> char.isLetter() || char.isWhitespace()}) description = it })
 
 
-            NoteButton(text = "Save",
-                onClick = {
-                    if (title.isNotEmpty() && description.isNotEmpty()) {
-                        title = ""
-                        description = ""
+            NoteButton(text = "Save", onClick = {
+                if (title.isNotEmpty() && description.isNotEmpty()){
+                title = ""
+                description = "" }
                     }
-                })
-
+                )
 
             }
         Divider(modifier = Modifier.padding(10.dp))
         LazyColumn{
             items(notes) {
                     note -> 
-                NoteRow(note = note,
-                    onNoteClicked = {})
+                NoteRow(
+                    note = note,
+                    onNoteClicked = {}
+                )
             }
         }
-
     }
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -113,17 +97,18 @@ fun NoteRow(
     Surface(
         modifier
             .padding(4.dp)
-            .clip(RoundedCornerShape(topEnd = 33.dp, bottomStart = 33.dp))
+            .clip(RoundedCornerShape(topEnd = 33.dp, bottomEnd = 33.dp))
             .fillMaxWidth(),
             color = Color(0xFFDFE6EB),
-            elevation = 6.dp) {
+            elevation = 6.dp
+    )
+    {
         Column(modifier
             .clickable { }
             .padding(horizontal = 14.dp, vertical = 6.dp),
-            horizontalAlignment = Alignment.Start) {
-            
+            horizontalAlignment = Alignment.Start)
+        {
             Text(text = note.title, style = MaterialTheme.typography.subtitle2)
-            
             Text(text = note.description, style = MaterialTheme.typography.subtitle1)
             Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE,d MMM")),
                 style = MaterialTheme.typography.caption)
@@ -137,5 +122,9 @@ fun NoteRow(
 @Preview(showBackground = true)
 @Composable
 fun NoteScreenPreview() {
-    NoteScreen(notes = NotesDataSource().loadNotes(), onAddNote = {}, onRemoveNote = {})
+    NoteScreen(
+        notes = NotesDataSource().loadNotes(),
+        onAddNote = {},
+        onRemoveNote = {}
+    )
 }
