@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import io.brainjuredstud.jetnote.data.NotesDataSource
+import io.brainjuredstud.jetnote.model.Note
 import io.brainjuredstud.jetnote.screen.NoteScreen
 import io.brainjuredstud.jetnote.ui.theme.JetNoteTheme
 
@@ -22,15 +24,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetNoteTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    NoteScreen(
-                        notes = NotesDataSource().loadNotes(),
-                        onAddNote = {},
-                        onRemoveNote = {}
-                    )
+                Surface(modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background) {
+
+                    val notes = remember {
+                        mutableStateListOf<Note>()
+                    }
+
+                    NoteScreen(notes = notes,
+                        onRemoveNote = {},
+                        onAddNote = {
+                            notes.add(it)
+                        })
                 }
             }
         }
