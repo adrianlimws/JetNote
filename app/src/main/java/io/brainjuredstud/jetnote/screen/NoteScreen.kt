@@ -27,7 +27,6 @@ import io.brainjuredstud.jetnote.components.NoteButton
 import io.brainjuredstud.jetnote.components.NoteInputText
 import io.brainjuredstud.jetnote.data.NotesDataSource
 import io.brainjuredstud.jetnote.model.Note
-import java.time.format.DateTimeFormatter
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -113,8 +112,8 @@ fun NoteRow(
         {
             Text(text = note.title, style = MaterialTheme.typography.subtitle2)
             Text(text = note.description, style = MaterialTheme.typography.subtitle1)
-            Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE,d MMM")),
-                style = MaterialTheme.typography.caption)
+//            Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE,d MMM")),
+//                style = MaterialTheme.typography.caption)
         }
     }
 }
